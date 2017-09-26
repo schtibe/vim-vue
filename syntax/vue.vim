@@ -42,19 +42,6 @@ function! s:register_language(language, tag, ...)
   endif
 endfunction
 
-function! s:register_tag(language, tag)
-  if s:syntax_available(a:language)
-    execute 'syntax include @' . a:language . ' syntax/' . a:language . '.vim'
-    unlet! b:current_syntax
-    execute 'syntax region vue_' . a:language
-          \ 'keepend'
-          \ 'start=/<' . a:tag . '>/'
-          \ 'end="</' . a:tag . '>"me=s-1'
-          \ 'contains=@' . a:language . ',vueSurroundingTag'
-          \ 'fold'
-  endif
-endfunction
-
 if !exists('g:vue_disable_pre_processors') || !g:vue_disable_pre_processors
   call s:register_tag('javascript', 'script')
   call s:register_tag('css', 'style')
